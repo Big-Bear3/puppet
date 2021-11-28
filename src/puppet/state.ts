@@ -1,4 +1,5 @@
 import { reactive, toRaw } from 'vue';
+import { coverObject, isObject } from './utils';
 
 const stateHolderToStates = new WeakMap<any, { states: { [key: string | symbol]: any } }>();
 
@@ -27,31 +28,12 @@ export function handleState(target: any, key: string | symbol): void {
             if (Reflect.has(states, key)) {
                 const result = verifyNewStateType(currentState, newState, target, key);
                 if (!result) return;
+            } else {
+                states[key] = newState;
             }
 
-            if (typeof currentState === 'object' && currentState !== null) {
-                if (Array.isArray(currentState)) {
-                    currentState.splice(0, currentState.length, ...newState);
-                } else if (currentState instanceof Map) {
-                    currentState.clear();
-                    for (const [newStateKey, newStateValue] of newState) {
-                        currentState.set(newStateKey, newStateValue);
-                    }
-                } else if (currentState instanceof Set) {
-                    currentState.clear();
-                    for (const newStateItem of newState) {
-                        currentState.add(newStateItem);
-                    }
-                } else {
-                    try {
-                        for (const currentStateKey of Object.keys(currentState)) {
-                            delete currentState[currentStateKey];
-                        }
-                        Object.assign(currentState, newState);
-                    } catch (error) {
-                        console.error('放入新的state出错！', error);
-                    }
-                }
+            if (isObject(currentState)) {
+                coverObject(currentState, newState);
             } else {
                 states[key] = newState;
             }
@@ -69,20 +51,17 @@ function getStates(stateHolder: any): any {
 }
 
 function verifyNewStateType(currentState: any, newState: any, stateHolder: any, key: string | symbol): boolean {
-    const currentStateType = typeof currentState;
-    const newStateType = typeof newState;
-
-    if (currentStateType === 'object' && currentState !== null && (newStateType !== 'object' || newState === null)) {
+    if (isObject(currentState) && !isObject(newState)) {
         showTypeError('对象', '基本', currentState, newState, stateHolder, key);
         return false;
     }
 
-    if ((currentStateType !== 'object' || currentState === null) && newStateType === 'object' && newState !== null) {
+    if (!isObject(currentState) && isObject(newState)) {
         showTypeError('基本', '对象', currentState, newState, stateHolder, key);
         return false;
     }
 
-    if (currentStateType === 'object' && currentStateType !== null) {
+    if (isObject(currentState)) {
         if (Array.isArray(currentState) && !Array.isArray(newState)) {
             showTypeError('数组', '对象', currentState, newState, stateHolder, key);
             return false;

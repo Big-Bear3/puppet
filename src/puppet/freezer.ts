@@ -1,4 +1,5 @@
 import { readonly } from 'vue';
+import { isObject } from './utils';
 
 export function handleFreezer(descriptor: PropertyDescriptor): void {
     let hostType: 'method' | 'accessor';
@@ -27,7 +28,7 @@ export function handleFreezer(descriptor: PropertyDescriptor): void {
 
 function handleFreezerFn(originFn: (...args: any[]) => any, originFnArgs: any[], stateHolder: any): any {
     const state = originFn.call(stateHolder, ...originFnArgs);
-    if (typeof state === 'object' && state !== null) {
+    if (isObject(state)) {
         return readonly(state);
     }
     return state;

@@ -5,12 +5,22 @@
         <input v-model="animals.get('aaa').redAnimals.monkey" />
         <input v-model="testStore.fruit" />
     </ul>
+    <ul class="puppet-ul">
+        <li>{{ testStore.fruitObj }}</li>
+        <li><input v-model="fruitShadow.apple" /></li>
+        <li><input v-model="fruitShadow.peach" /></li>
+        <li><input v-model="fruitShadow" /></li>
+        <li><button @click="commit">Commit</button></li>
+        <li><button @click="reset">Reset</button></li>
+    </ul>
 </template>
 
 <script lang="ts" setup>
 import { testStore } from '@/stores/stores';
 
-const { animals, fruit } = testStore;
+const { animals, fruitObj } = testStore;
+const [fruitShadow, commit, reset] = testStore.fruitShadow;
+(fruitShadow.value = 11111), commit();
 </script>
 <style lang="less">
 .puppet-ul {

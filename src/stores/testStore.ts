@@ -1,4 +1,4 @@
-import { Freezer, State } from '@/puppet/puppet';
+import { Freezer, Shadow, State } from '@/puppet/puppet';
 
 class A {
     aa: string;
@@ -38,6 +38,12 @@ class C extends B {
 }
 
 export class TestStore {
+    @State()
+    fruitObj: any = { apple: 'Apple', peach: 'Peach' };
+
+    @Shadow((testStore: TestStore) => testStore.fruitObj, 'apple')
+    fruitShadow: any;
+
     @State()
     private _fruit: any = 'apple';
 
