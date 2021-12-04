@@ -1,5 +1,9 @@
 <template>
-    <div id="nav"><router-link to="/">Puppet</router-link></div>
+    <div id="nav">
+        <router-link to="/">Puppet</router-link> |<router-link to="/animal">Animal</router-link> |<router-link to="/page"
+            >Page</router-link
+        >
+    </div>
     <router-view />
 </template>
 

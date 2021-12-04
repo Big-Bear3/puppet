@@ -8,7 +8,7 @@ export function handleShadow(
     target: any,
     key: string | symbol,
     partialStateOrShadowKey: string | symbol | ((stateHolder: any) => any),
-    shadowKeyOrEmpty?: string | symbol
+    shadowKeyOrEmpty?: string | symbol | number
 ): void {
     Reflect.defineProperty(target, key, {
         enumerable: true,
@@ -16,7 +16,7 @@ export function handleShadow(
         get(): PuppetShadow {
             const a = typeof partialStateOrShadowKey;
             let partialState: any;
-            let shadowKey: string | symbol;
+            let shadowKey: string | symbol | number;
             if (typeof partialStateOrShadowKey === 'function') {
                 partialState = partialStateOrShadowKey.call(this, this);
                 shadowKey = shadowKeyOrEmpty;
@@ -60,7 +60,7 @@ export function handleShadow(
                 if (isRef(shadowObject)) {
                     shadowObject.value = originalShadowObject;
                 } else {
-                    coverObject(shadowObject, originalShadowObject);
+                    coverObject(shadowObject, cloneDeep(originalShadowObject));
                 }
             };
 

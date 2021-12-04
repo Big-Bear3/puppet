@@ -4,7 +4,7 @@ import { handleState } from './state';
 
 export type PuppetShadowCommitFn = () => void;
 export type PuppetShadowResetFn = () => void;
-export type PuppetShadow = [shadowObject: any, commitFn: PuppetShadowCommitFn, resetFn: PuppetShadowResetFn];
+export type PuppetShadow<T = any> = [shadowObject: T, commitFn: PuppetShadowCommitFn, resetFn: PuppetShadowResetFn];
 
 export function State(): PropertyDecorator {
     return function (target: any, key: string | symbol) {
@@ -19,10 +19,13 @@ export function Freezer(): MethodDecorator {
 }
 
 export function Shadow(shadowKey: string | symbol): PropertyDecorator;
-export function Shadow(partialState: (stateHolder: any) => any, shadowKey: string | symbol): PropertyDecorator;
+export function Shadow<R>(
+    partialState: (stateHolder: any) => R,
+    shadowKey: R extends any[] ? number : string | symbol
+): PropertyDecorator;
 export function Shadow(
     partialStateOrShadowKey: string | symbol | ((stateHolder: any) => any),
-    shadowKeyOrEmpty?: string | symbol
+    shadowKeyOrEmpty?: string | symbol | number
 ): PropertyDecorator {
     return function (target: any, key: string | symbol) {
         handleShadow(target, key, partialStateOrShadowKey, shadowKeyOrEmpty);
