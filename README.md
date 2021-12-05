@@ -49,11 +49,12 @@ export const exampleStore3 = new ExampleStore3();
 在vue文件中，如果你的State是对象类型，如上面ExampleStore中的dateOfBirth，Puppet允许你对第一层解构来使用，而不失响应性。当然你不可以将这个State再设置为其他类型。如：原State是对象类型，将其设置为基本类型、原对象是非数组对象，将其设置为数组类型。
 ```
 <template>
-    <div>
-        <input v-model="dateOfBirth.year" />
-        <input v-model="dateOfBirth.month" />
-        <input v-model="dateOfBirth.day" />
-    </div>
+    <ul class="puppet-ul">
+        <li>Date Of Birth</li>
+        <li>Year：{{ dateOfBirth.year }}</li>
+        <li>Month：{{ dateOfBirth.month }}</li>
+        <li>Day：{{ dateOfBirth.day }}</li>
+    </ul>
 </template>
 
 <script lang="ts" setup>
@@ -66,8 +67,21 @@ const { dateOfBirth } = exampleStore;
 ```
 <div>Name：{{ exampleStore.name }}</div>
 ```
+## 如何更改State？
+在Puppet中没有像Vuex中mutation、action的概念，你可以在Store中定义普通的方法来改变该Store中的State。
+```
+setName(newName: string): void {
+    this.nameState = newName;
+}
 
+setDateOfBirth(newDateOfBirth: DateOfBirth): void {
+    this.dateOfBirthState = newDateOfBirth;
+}
 
+setYearOfBirth(newYear: number): void {
+    this.dateOfBirthState.year = newYear;
+}
+```
 
 
 
