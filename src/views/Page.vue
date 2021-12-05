@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts" setup>
-import { pageStore, componentStore } from '@/stores/stores';
+import { pageStore, componentStore } from '@/stores/index';
 
 const { readonlyPageData } = pageStore;
 

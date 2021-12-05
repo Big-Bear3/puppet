@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { basicTypeStateStore } from '@/stores/stores';
+import { basicTypeStateStore } from '@/stores/index';
 const [projectNameShadow, commitProjectName, resetProjectName] = basicTypeStateStore.projectNameShadow;
 
 setTimeout(() => {

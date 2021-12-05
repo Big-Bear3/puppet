@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Puppet from '../views/Puppet.vue';
+import Example from '../views/example.vue';
 import Page from '../views/Page.vue';
 import Animal from '../views/Animal.vue';
 import BasicTypeState from '../views/BasicTypeState.vue';
@@ -7,8 +7,8 @@ import BasicTypeState from '../views/BasicTypeState.vue';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
-        name: 'Puppet',
-        component: Puppet
+        name: 'Example',
+        component: Example
     },
     {
         path: '/animal',

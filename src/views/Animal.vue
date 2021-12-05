@@ -107,7 +107,7 @@
 </template>
 
 <script lang="ts" setup>
-import { animalStore } from '@/stores/stores';
+import { animalStore } from '@/stores/index';
 import { computed, ref, watch, watchEffect } from 'vue';
 const { shallowAnimals, shallowDucksArray, deepAnimals, firstDolphins, dynamicDeepAnimals, dynamicDeepAnimalsArray } = animalStore;
 const shallowPigs = shallowAnimals.pigs;

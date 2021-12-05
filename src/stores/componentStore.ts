@@ -1,7 +1,7 @@
+import { pageStore } from './index';
 import { PuppetShadow } from './../puppet/puppet';
 import { ComponentData, PageStore } from './pageStore';
 import { Freezer, Shadow } from '@/puppet/puppet';
-import { pageStore } from './stores';
 
 export class ComponentStore {
     @Freezer()
