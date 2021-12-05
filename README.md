@@ -33,7 +33,12 @@ get dateOfBirth(): DateOfBirth {
     return this.dateOfBirthState;
 }
 ```
-对于基本类型的State，因为没有set访问器，本身就是单向的。
+对于基本类型的State，因为没有set访问器，本身就是单向的，无需用该装饰器装饰。
+```
+get name(): string {
+    return this.nameState;
+}
+```
 ## 如何使用State？
 如果你的项目没有依赖注入工具的话，推荐你建一个或多个ts文件，来保存你的state实例。
 ```
@@ -135,9 +140,3 @@ monthOfBirthStateShadow: PuppetShadow<number>;
 const [dateOfBirthShadow, commitDateOfBirthShadow, resetDateOfBirthShadow] = exampleStore.dateOfBirthShadow;
 const [monthOfBirthShadow, commitMonthOfBirthShadow, resetMonthOfBirthShadow] = exampleStore.monthOfBirthShadow;
 ```
-
-
-
-
-
-
