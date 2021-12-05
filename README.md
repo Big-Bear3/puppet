@@ -1,5 +1,5 @@
 # puppet
-一款轻量级vue状态管理库，基于vue3响应式系统实现。
+一款轻量级的 **Vue3** 状态管理库，基于 **Typescript** + **Vue3** 响应式系统实现。
 ## 如何创建一个Store？
 本框架是基于类来实现的Store，你可以在项目中的任何地方创建一个类，作为你的Store，至于你想让这个Store是单例的还是多例的（一般是单例的），由你自己来决定。
 ## 如何创建一个State？
@@ -24,5 +24,17 @@ export class ExampleStore {
     get dateOfBirth(): DateOfBirth {
         return this.dateOfBirthState;
     }
+}
+```
+通过这种方式得到的State是双向数据流的，你可以通过 **@Freezer()** 装饰器，得到一个**单项数据流**的State！
+```
+@Freezer()
+get name(): string {
+    return this.nameState;
+}
+
+@Freezer()
+get dateOfBirth(): DateOfBirth {
+    return this.dateOfBirthState;
 }
 ```
