@@ -54,7 +54,6 @@
 
 <script lang="ts" setup>
 import { pageStore, componentStore } from '@/stores/stores';
-import { cloneDeep } from 'lodash';
 
 const { readonlyPageData } = pageStore;
 

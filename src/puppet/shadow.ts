@@ -14,7 +14,6 @@ export function handleShadow(
         enumerable: true,
         configurable: true,
         get(): PuppetShadow {
-            const a = typeof partialStateOrShadowKey;
             let partialState: any;
             let shadowKey: string | symbol | number;
             if (typeof partialStateOrShadowKey === 'function') {

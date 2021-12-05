@@ -1,8 +1,12 @@
 <template>
     <div id="nav">
-        <router-link to="/">Puppet</router-link> |<router-link to="/animal">Animal</router-link> |<router-link to="/page"
-            >Page</router-link
-        >
+        <router-link to="/">Puppet</router-link>
+        <span> | </span>
+        <router-link to="/animal">Animal</router-link>
+        <span> | </span>
+        <router-link to="/page">Page</router-link>
+        <span> | </span>
+        <router-link to="/basicTypeState">BasicTypeState</router-link>
     </div>
     <router-view />
 </template>
