@@ -46,7 +46,7 @@ export const exampleStore = new ExampleStore();
 export const exampleStore2 = new ExampleStore2();
 export const exampleStore3 = new ExampleStore3();
 ```
-在vue文件中，如果你的State是对象类型，如上面ExampleStore中的dateOfBirth，Puppet允许你对第一层解构来使用，而不失响应性。当然你不可以将这个State再设置为其他类型。如：原State是对象类型，将其设置为基本类型、原对象是非数组对象，将其设置为数组类型。
+在vue文件中，如果你的State是对象类型，如上面ExampleStore中的dateOfBirth，Puppet允许你对第一层解构来使用，而不失响应性。当然你不可以将这个State再赋其他类型的值。如：原State是对象类型，为其赋基本类型的值、原State是非数组类型的对象，将其赋数组类型的对象。
 ```
 <template>
     <ul>
