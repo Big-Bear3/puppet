@@ -63,7 +63,7 @@ const { dateOfBirth } = exampleStore;
 </script>
 ```
 
-如果你的state是基本类型，如上面ExampleStore中的name，则不可以结构，你需要通过exampleStore.name来使用，否则会失去响应性。
+如果你的state是基本类型，如上面ExampleStore中的name，则不可以解构，你需要通过exampleStore.name来使用，否则会失去响应性。
 ```
 <div>Name：{{ exampleStore.name }}</div>
 ```
