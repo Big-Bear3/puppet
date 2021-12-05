@@ -107,7 +107,7 @@ get changeableDateOfBirth(): DateOfBirth {
     return this.dateOfBirthState;
 }
 ```
-如果你需要的场景是输入值改变，在某一动作后，再更新State，如提交表单，则建议使用Puppet提供的 **@Shadow()** 装饰器，通过该装饰器创建State或State的一部分的响应式副本，在页面进行双向绑定。该装饰器有两个重载：
+如果你需要的场景是输入值改变，在某一动作后，再更新State，如提交表单，则建议使用Puppet提供的 **@Shadow()** 装饰器，通过该装饰器创建State或State的一部分的响应式副本，再在页面进行双向绑定。该装饰器有两个重载：
 ```
 export function Shadow(shadowKey: string | symbol): PropertyDecorator;
 export function Shadow<R extends Record<string | symbol, any>>(
@@ -125,7 +125,7 @@ nameShadow: PuppetShadow<string>;
 @Shadow((store: ExampleStore) => store.dateOfBirthState, 'month')
 monthOfBirthStateShadow: PuppetShadow<number>;
 ```
-返回的 **PuppetShadow** 类型的对象是一个元组，第一个元素为，你需要的State或State的一部分的对象副本，并且是响应式的，如果这个副本是基本类型，则Puppet会通过Vue3的ref函数去创建并包装这个副本。
+返回的 **PuppetShadow** 类型对象是一个元组，第一个元素为，你需要的State或State的一部分的对象副本，并且是响应式的，如果这个副本是基本类型，则Puppet会通过Vue3的ref函数去创建并包装这个副本。
 第二个元素为提交这个副本的函数，调用此函数后，Puppet会将你更改后的副本覆盖到你的State中去。第三个元素为重置这个副本的函数，调用此函数后，将当前的副本重置到初始值或上一次提交的值。
 ```
 <ul class="puppet-ul">
