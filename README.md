@@ -79,5 +79,26 @@ setYearOfBirth(newYear: number): void {
 }
 ```
 ## 如何双向绑定State？
+如果你需要的场景是输入的值一改变，立即更新State，则建议：
+基本类型的State：提供set访问器，直接在vue文件中双向绑定。
+对象类型的State：提供没有被@Freezer()装饰器装饰的get访问器，双向绑定get访问器返回的State。
+如果你需要的场景是输入后，在某一动作后，再更新State，如提交表单，则建议使用Puppet提供的 **@Shadow()** 装饰器。该装饰器有两个重载：
+```
+export function Shadow(shadowKey: string | symbol): PropertyDecorator;
+export function Shadow<R extends Record<string | symbol, any>>(
+    partialState: (stateHolder: any) => R,
+    shadowKey: R extends any[] ? number : keyof R
+): PropertyDecorator;
+```
+第一个重载的参数为，当前Store中你需要的State的key。
+第二个重载的参数为，partialState：当前Store中你需要的State中的对象的父对象； shadowKey：当前Store中你需要的State中的对象的key。
+
+
+
+
+
+
+
+
 
 
