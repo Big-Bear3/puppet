@@ -110,7 +110,19 @@ monthOfBirthStateShadow: PuppetShadow<number>;
 ```
 返回的 **PuppetShadow** 类型的对象是一个元组，第一个元素为，你需要的State或State的一部分的对象副本，并且是响应式的，如果这个副本是基本类型，则Puppet会通过Vue3的ref函数去创建并包装这个副本。
 第二个元素为提交这个副本的函数，调用此函数后，Puppet会将你更改后的副本覆盖到你的State中去。第三个元素为重置这个副本的函数，调用此函数后，将当前的副本重置到初始值或上一次提交的值。
+```
+<ul class="puppet-ul">
+    <li>Year Of Birth：<input v-model="dateOfBirthShadow.year" /></li>
+    <li><button @click="commitDateOfBirthShadow">Commit</button></li>
+    <li><button @click="resetDateOfBirthShadow">Reset</button></li>
+    <li>Month Of Birth：<input v-model="monthOfBirthShadow" /></li>
+    <li><button @click="commitMonthOfBirthShadow">Commit</button></li>
+    <li><button @click="resetMonthOfBirthShadow">Reset</button></li>
+</ul>
 
+const [dateOfBirthShadow, commitDateOfBirthShadow, resetDateOfBirthShadow] = exampleStore.dateOfBirthShadow;
+const [monthOfBirthShadow, commitMonthOfBirthShadow, resetMonthOfBirthShadow] = exampleStore.monthOfBirthShadow;
+```
 
 
 
