@@ -78,7 +78,7 @@ setYearOfBirth(newYear: number): void {
 }
 ```
 ## 如何双向绑定State？
-如果你需要的场景是输入的值一改变，立即更新State，则建议：
+如果你需要的场景是输入的值一旦改变，立即更新State，则建议：
 基本类型的State：提供set访问器，直接在vue文件中双向绑定。
 对象类型的State：提供没有被@Freezer()装饰器装饰的get访问器，双向绑定get访问器返回的State。
 ```
@@ -89,8 +89,20 @@ setYearOfBirth(newYear: number): void {
     <li>月：<input v-model="changeableDateOfBirth.month" /></li>
     <li>日：<input v-model="changeableDateOfBirth.day" /></li>
 </ul>
+
+set name(newName: string) {
+    this.nameState = newName;
+}
+
+get name(): string {
+    return this.nameState;
+}
+
+get changeableDateOfBirth(): DateOfBirth {
+    return this.dateOfBirthState;
+}
 ```
-如果你需要的场景是输入后，在某一动作后，再更新State，如提交表单，则建议使用Puppet提供的 **@Shadow()** 装饰器。该装饰器有两个重载：
+如果你需要的场景是输入值改变，在某一动作后，再更新State，如提交表单，则建议使用Puppet提供的 **@Shadow()** 装饰器，通过该装饰器创建State或State的一部分的响应式副本，在页面进行双向绑定。该装饰器有两个重载：
 ```
 export function Shadow(shadowKey: string | symbol): PropertyDecorator;
 export function Shadow<R extends Record<string | symbol, any>>(
