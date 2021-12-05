@@ -37,7 +37,6 @@ get dateOfBirth(): DateOfBirth {
 ## 如何使用State？
 如果你的项目没有依赖注入工具的话，推荐你建一个或多个ts文件，来保存你的state实例。
 ```
-// stores.ts
 export const exampleStore = new ExampleStore();
 export const exampleStore2 = new ExampleStore2();
 export const exampleStore3 = new ExampleStore3();
@@ -45,16 +44,16 @@ export const exampleStore3 = new ExampleStore3();
 在vue文件中，如果你的State是对象类型，如上面ExampleStore中的dateOfBirth，Puppet允许你对第一层解构来使用，而不失响应性。当然你不可以将这个State再设置为其他类型。如：原State是对象类型，将其设置为基本类型、原对象是非数组对象，将其设置为数组类型。
 ```
 <template>
-    <ul class="puppet-ul">
+    <ul>
         <li>Date Of Birth</li>
-        <li>Year：{{ dateOfBirth.year }}</li>
-        <li>Month：{{ dateOfBirth.month }}</li>
-        <li>Day：{{ dateOfBirth.day }}</li>
+        <li>Year: {{ dateOfBirth.year }}</li>
+        <li>Month: {{ dateOfBirth.month }}</li>
+        <li>Day: {{ dateOfBirth.day }}</li>
     </ul>
 </template>
 
 <script lang="ts" setup>
-import { exampleStore } from '@/stores/stores';
+import { exampleStore } from '@/stores';
 const { dateOfBirth } = exampleStore;
 </script>
 ```
@@ -82,6 +81,15 @@ setYearOfBirth(newYear: number): void {
 如果你需要的场景是输入的值一改变，立即更新State，则建议：
 基本类型的State：提供set访问器，直接在vue文件中双向绑定。
 对象类型的State：提供没有被@Freezer()装饰器装饰的get访问器，双向绑定get访问器返回的State。
+```
+<ul>
+    <li>Name: <input v-model="exampleStore.name" /></li>
+    <li>Date Of Birth</li>
+    <li>年：<input v-model="changeableDateOfBirth.year" /></li>
+    <li>月：<input v-model="changeableDateOfBirth.month" /></li>
+    <li>日：<input v-model="changeableDateOfBirth.day" /></li>
+</ul>
+```
 如果你需要的场景是输入后，在某一动作后，再更新State，如提交表单，则建议使用Puppet提供的 **@Shadow()** 装饰器。该装饰器有两个重载：
 ```
 export function Shadow(shadowKey: string | symbol): PropertyDecorator;
