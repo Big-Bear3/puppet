@@ -1,5 +1,5 @@
 import { PuppetShadow, State } from './../puppet/puppet';
-import { Freezer, Shadow } from '@/puppet/puppet';
+import { Shadow } from '@/puppet/puppet';
 
 export class BasicTypeStateStore {
     @State()
@@ -11,18 +11,20 @@ export class BasicTypeStateStore {
     @Shadow('projectName')
     projectNameShadow: PuppetShadow<string>;
 
-    @Freezer()
     get readonlyProjectId(): number {
         return this.projectId;
     }
 
-    @Freezer()
     get readonlyProjectName(): string {
         return this.projectName;
     }
 
     constructor() {
         this.projectName = 'My Project!!!';
+
+        setTimeout(() => {
+            this.projectId = 456;
+        }, 1000);
     }
 
     increaseProjectId(): void {
