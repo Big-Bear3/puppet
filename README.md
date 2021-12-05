@@ -26,14 +26,14 @@ export class ExampleStore {
     }
 }
 ```
-通过这种方式得到的State是双向数据流的，你可以使用Puppet中的 **@Freezer()** 装饰器，得到一个**单项数据流**的State！
+通过这种方式得到的State是双向数据流的，你可以使用Puppet中的 **@Freezer()** 装饰器，得到一个**单向数据流**的State！
 ```
 @Freezer()
 get dateOfBirth(): DateOfBirth {
     return this.dateOfBirthState;
 }
 ```
-对于基本类型的State，因为没有set访问器，本身就是单项的。
+对于基本类型的State，因为没有set访问器，本身就是单向的。
 ## 如何使用State？
 如果你的项目没有依赖注入工具的话，推荐你建一个或多个ts文件，来保存你的state实例。
 ```
@@ -100,9 +100,16 @@ export function Shadow<R extends Record<string | symbol, any>>(
 ```
 第一个重载的参数为，当前Store中你需要的State的key。
 第二个重载的参数为，partialState：当前Store中你需要的State中的对象的父对象； shadowKey：当前Store中你需要的State中的对象的key。
+使用方式如下：
+```
+@Shadow('name')
+nameShadow: PuppetShadow<string>;
 
-
-
+@Shadow((store: ExampleStore) => store.dateOfBirthState, 'month')
+monthOfBirthStateShadow: PuppetShadow<number>;
+```
+返回的 **PuppetShadow** 类型的对象是一个元组，第一个元素为，你需要的State或State的一部分的对象副本，并且是响应式的，如果这个副本是基本类型，则Puppet会通过Vue3的ref函数去创建并包装这个副本。
+第二个元素为提交这个副本的函数，调用此函数后，Puppet会将你更改后的副本覆盖到你的State中去。第三个元素为重置这个副本的函数，调用此函数后，将当前的副本重置到初始值或上一次提交的值。
 
 
 
